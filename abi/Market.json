@@ -6,7 +6,7 @@
   },
   {
     "type": "function",
-    "name": "CONTRACT_SIZE",
+    "name": "MM_BPS",
     "inputs": [],
     "outputs": [
       {
@@ -45,38 +45,6 @@
   },
   {
     "type": "function",
-    "name": "badDebt",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "balances",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "cancelOrder",
     "inputs": [
       {
@@ -90,26 +58,13 @@
   },
   {
     "type": "function",
-    "name": "collateralDecimals",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint64",
-        "internalType": "uint64"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "collateralToken",
     "inputs": [],
     "outputs": [
       {
         "name": "",
         "type": "address",
-        "internalType": "contract IERC20"
+        "internalType": "address"
       }
     ],
     "stateMutability": "view"
@@ -139,11 +94,6 @@
     ],
     "outputs": [
       {
-        "name": "active",
-        "type": "bool",
-        "internalType": "bool"
-      },
-      {
         "name": "isSettled",
         "type": "bool",
         "internalType": "bool"
@@ -163,19 +113,6 @@
   },
   {
     "type": "function",
-    "name": "denominator",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "depositCollateral",
     "inputs": [
       {
@@ -189,79 +126,21 @@
   },
   {
     "type": "function",
-    "name": "detCA",
+    "name": "depositCollateral",
     "inputs": [
       {
-        "name": "",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
+        "name": "amount",
         "type": "uint256",
         "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "detCB",
-    "inputs": [
+      },
       {
-        "name": "",
-        "type": "uint16",
-        "internalType": "uint16"
+        "name": "signature",
+        "type": "bytes",
+        "internalType": "bytes"
       }
     ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "detPA",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "detPB",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -278,45 +157,13 @@
   },
   {
     "type": "function",
-    "name": "fixPrice",
+    "name": "getNumTraders",
     "inputs": [],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "getOraclePrice",
-    "inputs": [
-      {
-        "name": "index",
-        "type": "uint32",
-        "internalType": "uint32"
-      }
-    ],
     "outputs": [
       {
         "name": "",
-        "type": "uint64",
-        "internalType": "uint64"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "inList",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -351,6 +198,49 @@
   },
   {
     "type": "function",
+    "name": "isLiquidatable",
+    "inputs": [
+      {
+        "name": "trader",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "isLiquidatable",
+    "inputs": [
+      {
+        "name": "trader",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "price",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "isTrustedForwarder",
     "inputs": [
       {
@@ -370,43 +260,9 @@
   },
   {
     "type": "function",
-    "name": "levels",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint32",
-        "internalType": "uint32"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "vol",
-        "type": "uint128",
-        "internalType": "uint128"
-      },
-      {
-        "name": "head",
-        "type": "uint16",
-        "internalType": "uint16"
-      },
-      {
-        "name": "tail",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "liquidate",
     "inputs": [
       {
-        "name": "makerIds",
-        "type": "uint16[]",
-        "internalType": "uint16[]"
-      },
-      {
         "name": "trader",
         "type": "address",
         "internalType": "address"
@@ -425,154 +281,13 @@
         "internalType": "uint256"
       },
       {
-        "name": "signature",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "long",
-    "inputs": [
-      {
-        "name": "size",
+        "name": "cycleId",
         "type": "uint256",
         "internalType": "uint256"
       }
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "makerFeeBps",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "int256",
-        "internalType": "int256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "makerQ",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "trader",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "size",
-        "type": "uint128",
-        "internalType": "uint128"
-      },
-      {
-        "name": "next",
-        "type": "uint16",
-        "internalType": "uint16"
-      },
-      {
-        "name": "key",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "prev",
-        "type": "uint16",
-        "internalType": "uint16"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "midCA",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint8",
-        "internalType": "uint8"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "midCB",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint8",
-        "internalType": "uint8"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "midPA",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint8",
-        "internalType": "uint8"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "midPB",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint8",
-        "internalType": "uint8"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -602,26 +317,6 @@
   },
   {
     "type": "function",
-    "name": "paidOut",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "pause",
-    "inputs": [],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
     "name": "paused",
     "inputs": [],
     "outputs": [
@@ -638,14 +333,9 @@
     "name": "placeOrder",
     "inputs": [
       {
-        "name": "option",
-        "type": "uint8",
-        "internalType": "enum OptionType"
-      },
-      {
         "name": "side",
         "type": "uint8",
-        "internalType": "enum Side"
+        "internalType": "enum MarketSide"
       },
       {
         "name": "size",
@@ -658,41 +348,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "signature",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "orderId",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "placeOrder",
-    "inputs": [
-      {
-        "name": "option",
-        "type": "uint8",
-        "internalType": "enum OptionType"
-      },
-      {
-        "name": "side",
-        "type": "uint8",
-        "internalType": "enum Side"
-      },
-      {
-        "name": "size",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "limitPrice",
+        "name": "cycleId",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -705,60 +361,6 @@
       }
     ],
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "positions",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "longCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "shortCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "longPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "shortPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingLongCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingShortCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingLongPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingShortPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -803,13 +405,7 @@
         "internalType": "uint256"
       }
     ],
-    "outputs": [
-      {
-        "name": "done",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable"
   },
   {
@@ -822,20 +418,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "signature",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "short",
-    "inputs": [
-      {
-        "name": "size",
+        "name": "cycleId",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -846,57 +429,14 @@
   {
     "type": "function",
     "name": "startCycle",
-    "inputs": [
-      {
-        "name": "expiry",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
+    "inputs": [],
     "outputs": [],
     "stateMutability": "nonpayable"
   },
   {
     "type": "function",
-    "name": "summaries",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "takerFeeBps",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "int256",
-        "internalType": "int256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "tqHead",
     "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
       {
         "name": "",
         "type": "uint256",
@@ -959,13 +499,6 @@
   },
   {
     "type": "function",
-    "name": "unpause",
-    "inputs": [],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
     "name": "upgradeToAndCall",
     "inputs": [
       {
@@ -984,36 +517,108 @@
   },
   {
     "type": "function",
-    "name": "viewTakerQueue",
+    "name": "userAccounts",
     "inputs": [
       {
-        "name": "isPut",
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "activeInCycle",
         "type": "bool",
         "internalType": "bool"
       },
       {
-        "name": "isBid",
+        "name": "liquidationQueued",
         "type": "bool",
         "internalType": "bool"
+      },
+      {
+        "name": "balance",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "liquidationFeeOwed",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "scratchPnL",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "_gap",
+        "type": "uint48",
+        "internalType": "uint48"
+      },
+      {
+        "name": "longCalls",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "shortCalls",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "longPuts",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "shortPuts",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "pendingLongCalls",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "pendingShortCalls",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "pendingLongPuts",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "pendingShortPuts",
+        "type": "uint32",
+        "internalType": "uint32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "userOrders",
+    "inputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
       }
     ],
     "outputs": [
       {
         "name": "",
-        "type": "tuple[]",
-        "internalType": "struct TakerQ[]",
-        "components": [
-          {
-            "name": "trader",
-            "type": "address",
-            "internalType": "address"
-          },
-          {
-            "name": "size",
-            "type": "uint96",
-            "internalType": "uint96"
-          }
-        ]
+        "type": "uint32",
+        "internalType": "uint32"
       }
     ],
     "stateMutability": "view"
@@ -1135,7 +740,7 @@
   },
   {
     "type": "event",
-    "name": "Liquidated",
+    "name": "LimitOrderCancelled",
     "inputs": [
       {
         "name": "cycleId",
@@ -1144,35 +749,16 @@
         "internalType": "uint256"
       },
       {
-        "name": "trader",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      }
-    ],
-    "anonymous": false
-  },
-  {
-    "type": "event",
-    "name": "OrderCancelled",
-    "inputs": [
-      {
-        "name": "cycleId",
-        "type": "uint256",
-        "indexed": true,
-        "internalType": "uint256"
-      },
-      {
-        "name": "orderId",
+        "name": "makerOrderId",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
       },
       {
         "name": "size",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
       },
       {
         "name": "limitPrice",
@@ -1191,7 +777,7 @@
   },
   {
     "type": "event",
-    "name": "OrderFilled",
+    "name": "LimitOrderFilled",
     "inputs": [
       {
         "name": "cycleId",
@@ -1200,16 +786,22 @@
         "internalType": "uint256"
       },
       {
-        "name": "orderId",
+        "name": "makerOrderId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "takerOrderId",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
       },
       {
         "name": "size",
-        "type": "uint128",
+        "type": "uint256",
         "indexed": false,
-        "internalType": "uint128"
+        "internalType": "uint256"
       },
       {
         "name": "limitPrice",
@@ -1218,16 +810,10 @@
         "internalType": "uint256"
       },
       {
-        "name": "isBuy",
-        "type": "bool",
+        "name": "side",
+        "type": "uint8",
         "indexed": false,
-        "internalType": "bool"
-      },
-      {
-        "name": "isPut",
-        "type": "bool",
-        "indexed": false,
-        "internalType": "bool"
+        "internalType": "enum MarketSide"
       },
       {
         "name": "taker",
@@ -1242,6 +828,18 @@
         "internalType": "address"
       },
       {
+        "name": "cashTaker",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "cashMaker",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
         "name": "btcPrice",
         "type": "uint256",
         "indexed": false,
@@ -1252,7 +850,7 @@
   },
   {
     "type": "event",
-    "name": "OrderPlaced",
+    "name": "LimitOrderPlaced",
     "inputs": [
       {
         "name": "cycleId",
@@ -1261,7 +859,7 @@
         "internalType": "uint256"
       },
       {
-        "name": "orderId",
+        "name": "makerOrderId",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"
@@ -1279,19 +877,32 @@
         "internalType": "uint256"
       },
       {
-        "name": "isBuy",
-        "type": "bool",
+        "name": "side",
+        "type": "uint8",
         "indexed": false,
-        "internalType": "bool"
-      },
-      {
-        "name": "isPut",
-        "type": "bool",
-        "indexed": false,
-        "internalType": "bool"
+        "internalType": "enum MarketSide"
       },
       {
         "name": "maker",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Liquidated",
+    "inputs": [
+      {
+        "name": "cycleId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "trader",
         "type": "address",
         "indexed": true,
         "internalType": "address"
@@ -1371,6 +982,80 @@
         "type": "int256",
         "indexed": false,
         "internalType": "int256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TakerOrderPlaced",
+    "inputs": [
+      {
+        "name": "cycleId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "takerOrderId",
+        "type": "uint32",
+        "indexed": false,
+        "internalType": "uint32"
+      },
+      {
+        "name": "size",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "side",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum MarketSide"
+      },
+      {
+        "name": "taker",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TakerOrderRemaining",
+    "inputs": [
+      {
+        "name": "cycleId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "takerOrderId",
+        "type": "uint32",
+        "indexed": false,
+        "internalType": "uint32"
+      },
+      {
+        "name": "size",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "side",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum MarketSide"
+      },
+      {
+        "name": "taker",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
       }
     ],
     "anonymous": false
@@ -1497,6 +1182,17 @@
     "inputs": [
       {
         "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "SafeERC20FailedOperation",
+    "inputs": [
+      {
+        "name": "token",
         "type": "address",
         "internalType": "address"
       }
