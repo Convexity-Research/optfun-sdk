@@ -1,21 +1,7 @@
 [
   {
-    "type": "constructor",
-    "inputs": [],
+    "type": "fallback",
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "MM_BPS",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -32,16 +18,31 @@
   },
   {
     "type": "function",
-    "name": "activeCycle",
-    "inputs": [],
-    "outputs": [
+    "name": "cancelAndClose",
+    "inputs": [
       {
-        "name": "",
+        "name": "buyCallPrice",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "sellCallPrice",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "buyPutPrice",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "sellPutPrice",
         "type": "uint256",
         "internalType": "uint256"
       }
     ],
-    "stateMutability": "view"
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -55,48 +56,6 @@
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "collateralToken",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "cycles",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "isSettled",
-        "type": "bool",
-        "internalType": "bool"
-      },
-      {
-        "name": "strikePrice",
-        "type": "uint64",
-        "internalType": "uint64"
-      },
-      {
-        "name": "settlementPrice",
-        "type": "uint64",
-        "internalType": "uint64"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -131,6 +90,130 @@
   },
   {
     "type": "function",
+    "name": "getActiveCycle",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getCollateralToken",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getCycles",
+    "inputs": [
+      {
+        "name": "cycleId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct Cycle",
+        "components": [
+          {
+            "name": "isSettled",
+            "type": "bool",
+            "internalType": "bool"
+          },
+          {
+            "name": "strikePrice",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "settlementPrice",
+            "type": "uint64",
+            "internalType": "uint64"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getLevels",
+    "inputs": [
+      {
+        "name": "key",
+        "type": "uint32",
+        "internalType": "uint32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct Level",
+        "components": [
+          {
+            "name": "vol",
+            "type": "uint128",
+            "internalType": "uint128"
+          },
+          {
+            "name": "head",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "tail",
+            "type": "uint32",
+            "internalType": "uint32"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getMmBps",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "type": "function",
+    "name": "getName",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "getNumTraders",
     "inputs": [],
     "outputs": [
@@ -138,6 +221,171 @@
         "name": "",
         "type": "uint256",
         "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getTakerQ",
+    "inputs": [
+      {
+        "name": "side",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "internalType": "struct TakerQ[]",
+        "components": [
+          {
+            "name": "trader",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "size",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "takerOrderId",
+            "type": "int32",
+            "internalType": "int32"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getUserAccounts",
+    "inputs": [
+      {
+        "name": "trader",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct SharedStorage.UserAccount",
+        "components": [
+          {
+            "name": "activeInCycle",
+            "type": "bool",
+            "internalType": "bool"
+          },
+          {
+            "name": "liquidationQueued",
+            "type": "bool",
+            "internalType": "bool"
+          },
+          {
+            "name": "balance",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "liquidationFeeOwed",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "scratchPnL",
+            "type": "uint64",
+            "internalType": "uint64"
+          },
+          {
+            "name": "_gap",
+            "type": "uint48",
+            "internalType": "uint48"
+          },
+          {
+            "name": "longCalls",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "shortCalls",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "longPuts",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "shortPuts",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "pendingLongCalls",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "pendingShortCalls",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "pendingLongPuts",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "pendingShortPuts",
+            "type": "uint32",
+            "internalType": "uint32"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getUserOrders",
+    "inputs": [
+      {
+        "name": "trader",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint32[]",
+        "internalType": "uint32[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getWhitelist",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
       }
     ],
     "stateMutability": "view"
@@ -280,19 +528,6 @@
   },
   {
     "type": "function",
-    "name": "name",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
     "name": "owner",
     "inputs": [],
     "outputs": [
@@ -323,6 +558,34 @@
       }
     ],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "placeMultiOrder",
+    "inputs": [
+      {
+        "name": "sides",
+        "type": "uint8[]",
+        "internalType": "enum MarketSide[]"
+      },
+      {
+        "name": "sizes",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "limitPrices",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "cycleId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -375,6 +638,19 @@
     "type": "function",
     "name": "renounceOwnership",
     "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setExtension",
+    "inputs": [
+      {
+        "name": "ext",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
     "outputs": [],
     "stateMutability": "nonpayable"
   },
@@ -481,109 +757,6 @@
     ],
     "outputs": [],
     "stateMutability": "payable"
-  },
-  {
-    "type": "function",
-    "name": "userAccounts",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "activeInCycle",
-        "type": "bool",
-        "internalType": "bool"
-      },
-      {
-        "name": "liquidationQueued",
-        "type": "bool",
-        "internalType": "bool"
-      },
-      {
-        "name": "balance",
-        "type": "uint64",
-        "internalType": "uint64"
-      },
-      {
-        "name": "liquidationFeeOwed",
-        "type": "uint64",
-        "internalType": "uint64"
-      },
-      {
-        "name": "scratchPnL",
-        "type": "uint64",
-        "internalType": "uint64"
-      },
-      {
-        "name": "_gap",
-        "type": "uint48",
-        "internalType": "uint48"
-      },
-      {
-        "name": "longCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "shortCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "longPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "shortPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingLongCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingShortCalls",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingLongPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      },
-      {
-        "name": "pendingShortPuts",
-        "type": "uint32",
-        "internalType": "uint32"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "whitelist",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -1126,6 +1299,11 @@
   },
   {
     "type": "error",
+    "name": "InTraderList",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "InsufficientBalance",
     "inputs": []
   },
@@ -1162,6 +1340,16 @@
   {
     "type": "error",
     "name": "NotInitializing",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotOrderOwner",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotSecurityCouncil",
     "inputs": []
   },
   {

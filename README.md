@@ -53,7 +53,7 @@ func getActiveCycle(client *ethclient.Client) {
         log.Fatalf("Failed to load market: %v", err)
     }
 
-    activeCycle, err := market.ActiveCycle(nil)
+    activeCycle, err := market.GetActiveCycle(nil)
     if err != nil {
         log.Fatalf("Failed to get active cycle: %v", err)
     }
@@ -71,7 +71,7 @@ func getCycleInfo(client *ethclient.Client, cycleId *big.Int) {
         log.Fatalf("Failed to load market: %v", err)
     }
 
-    cycle, err := market.Cycles(nil, cycleId)
+    cycle, err := market.GetCycles(nil, cycleId)
     if err != nil {
         log.Fatalf("Failed to get cycle info: %v", err)
     }
@@ -90,7 +90,7 @@ func getUserAccount(client *ethclient.Client, userAddress common.Address) {
         log.Fatalf("Failed to load market: %v", err)
     }
 
-    account, err := market.UserAccounts(nil, userAddress)
+    account, err := market.GetUserAccounts(nil, userAddress)
     if err != nil {
         log.Fatalf("Failed to get user account: %v", err)
     }
@@ -100,6 +100,97 @@ func getUserAccount(client *ethclient.Client, userAddress common.Address) {
         account.LongCalls, account.ShortCalls, account.LongPuts, account.ShortPuts)
     fmt.Printf("Pending - Long Calls: %v, Short Calls: %v, Long Puts: %v, Short Puts: %v\n",
         account.PendingLongCalls, account.PendingShortCalls, account.PendingLongPuts, account.PendingShortPuts)
+}
+```
+
+#### Get Market Information
+```go
+func getMarketInfo(client *ethclient.Client) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    // Get market name
+    name, err := market.GetName(nil)
+    if err != nil {
+        log.Fatalf("Failed to get market name: %v", err)
+    }
+    fmt.Printf("Market Name: %s\n", name)
+
+    // Get number of traders
+    numTraders, err := market.GetNumTraders(nil)
+    if err != nil {
+        log.Fatalf("Failed to get number of traders: %v", err)
+    }
+    fmt.Printf("Number of Traders: %v\n", numTraders)
+
+    // Get MM BPS
+    mmBps, err := market.GetMmBps(nil)
+    if err != nil {
+        log.Fatalf("Failed to get MM BPS: %v", err)
+    }
+    fmt.Printf("MM BPS: %v\n", mmBps)
+}
+```
+
+#### Get User Orders
+```go
+func getUserOrders(client *ethclient.Client, userAddress common.Address) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    orders, err := market.GetUserOrders(nil, userAddress)
+    if err != nil {
+        log.Fatalf("Failed to get user orders: %v", err)
+    }
+
+    fmt.Printf("User Orders: %v\n", orders)
+}
+```
+
+#### Get Taker Queue
+```go
+func getTakerQueue(client *ethclient.Client, side *big.Int) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    takerQ, err := market.GetTakerQ(nil, side)
+    if err != nil {
+        log.Fatalf("Failed to get taker queue: %v", err)
+    }
+
+    fmt.Printf("Taker Queue for side %v:\n", side)
+    for i, taker := range takerQ {
+        fmt.Printf("  %d: Trader: %s, Size: %v, Order ID: %v\n", 
+            i, taker.Trader.Hex(), taker.Size, taker.TakerOrderId)
+    }
+}
+```
+
+#### Get Levels
+```go
+func getLevels(client *ethclient.Client, key uint32) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    level, err := market.GetLevels(nil, key)
+    if err != nil {
+        log.Fatalf("Failed to get levels: %v", err)
+    }
+
+    fmt.Printf("Level for key %d: Volume: %v, Head: %v, Tail: %v\n", 
+        key, level.Vol, level.Head, level.Tail)
 }
 ```
 
@@ -115,7 +206,7 @@ func depositCollateral(client *ethclient.Client, txOpts *bind.TransactOpts) {
     }
 
     // Get collateral token address and approve spending
-    collateralTokenAddress, err := market.CollateralToken(nil)
+    collateralTokenAddress, err := market.GetCollateralToken(nil)
     if err != nil {
         log.Fatalf("Failed to get collateral token: %v", err)
     }
@@ -140,6 +231,27 @@ func depositCollateral(client *ethclient.Client, txOpts *bind.TransactOpts) {
     }
 
     fmt.Printf("Collateral deposited. Transaction hash: %s\n", tx.Hash().Hex())
+}
+```
+
+#### Deposit Collateral with Signature (for whitelisting)
+```go
+func depositCollateralWithSignature(client *ethclient.Client, txOpts *bind.TransactOpts, signature []byte) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    depositAmount := big.NewInt(1000000) // 1 USDC (6 decimals)
+    
+    // Deposit collateral with signature for whitelisting
+    tx, err := market.DepositCollateral0(txOpts, depositAmount, signature)
+    if err != nil {
+        log.Fatalf("Failed to deposit collateral with signature: %v", err)
+    }
+
+    fmt.Printf("Collateral deposited with signature. Transaction hash: %s\n", tx.Hash().Hex())
 }
 ```
 
@@ -175,7 +287,7 @@ func placeLimitOrder(client *ethclient.Client, txOpts *bind.TransactOpts) {
     }
 
     // Get active cycle
-    activeCycle, err := market.ActiveCycle(nil)
+    activeCycle, err := market.GetActiveCycle(nil)
     if err != nil {
         log.Fatalf("Failed to get active cycle: %v", err)
     }
@@ -224,7 +336,7 @@ func longPosition(client *ethclient.Client, txOpts *bind.TransactOpts) {
     }
 
     // Get active cycle
-    activeCycle, err := market.ActiveCycle(nil)
+    activeCycle, err := market.GetActiveCycle(nil)
     if err != nil {
         log.Fatalf("Failed to get active cycle: %v", err)
     }
@@ -253,7 +365,7 @@ func shortPosition(client *ethclient.Client, txOpts *bind.TransactOpts) {
     }
 
     // Get active cycle
-    activeCycle, err := market.ActiveCycle(nil)
+    activeCycle, err := market.GetActiveCycle(nil)
     if err != nil {
         log.Fatalf("Failed to get active cycle: %v", err)
     }
@@ -272,6 +384,60 @@ func shortPosition(client *ethclient.Client, txOpts *bind.TransactOpts) {
 }
 ```
 
+#### Place Multiple Orders
+```go
+func placeMultipleOrders(client *ethclient.Client, txOpts *bind.TransactOpts) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    // Get active cycle
+    activeCycle, err := market.GetActiveCycle(nil)
+    if err != nil {
+        log.Fatalf("Failed to get active cycle: %v", err)
+    }
+
+    // Order parameters for multiple orders
+    sides := []uint8{0, 1, 2, 3}                                           // Buy call, sell call, buy put, sell put
+    sizes := []*big.Int{big.NewInt(5), big.NewInt(3), big.NewInt(7), big.NewInt(4)}    // Different sizes
+    limitPrices := []*big.Int{big.NewInt(100), big.NewInt(110), big.NewInt(80), big.NewInt(90)} // Different prices
+    cycleId := activeCycle
+
+    tx, err := market.PlaceMultiOrder(txOpts, sides, sizes, limitPrices, cycleId)
+    if err != nil {
+        log.Fatalf("Failed to place multiple orders: %v", err)
+    }
+
+    fmt.Printf("Multiple orders placed. Transaction hash: %s\n", tx.Hash().Hex())
+}
+```
+
+#### Cancel and Close All Positions
+```go
+func cancelAndCloseAll(client *ethclient.Client, txOpts *bind.TransactOpts) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    // Prices for closing positions
+    buyCallPrice := big.NewInt(105)
+    sellCallPrice := big.NewInt(95)
+    buyPutPrice := big.NewInt(85)
+    sellPutPrice := big.NewInt(75)
+
+    tx, err := market.CancelAndClose(txOpts, buyCallPrice, sellCallPrice, buyPutPrice, sellPutPrice)
+    if err != nil {
+        log.Fatalf("Failed to cancel and close: %v", err)
+    }
+
+    fmt.Printf("All orders cancelled and positions closed. Transaction hash: %s\n", tx.Hash().Hex())
+}
+```
+
 ### 4. Position Management
 
 #### Get User Positions
@@ -283,7 +449,7 @@ func getUserPositions(client *ethclient.Client, userAddress common.Address) {
         log.Fatalf("Failed to load market: %v", err)
     }
 
-    account, err := market.UserAccounts(nil, userAddress)
+    account, err := market.GetUserAccounts(nil, userAddress)
     if err != nil {
         log.Fatalf("Failed to get user account: %v", err)
     }
@@ -351,7 +517,7 @@ func liquidateUser(client *ethclient.Client, txOpts *bind.TransactOpts, userAddr
 }
 ```
 
-### 5. Oracle Price Information
+### 5. Additional Market Information
 
 #### Get Current Oracle Price
 ```go
@@ -380,12 +546,56 @@ func checkWhitelist(client *ethclient.Client, address common.Address) {
         log.Fatalf("Failed to load market: %v", err)
     }
 
-    isWhitelisted, err := market.Whitelist(nil, address)
+    isWhitelisted, err := market.GetWhitelist(nil, address)
     if err != nil {
         log.Fatalf("Failed to check whitelist status: %v", err)
     }
 
     fmt.Printf("Address %s is whitelisted: %v\n", address.Hex(), isWhitelisted)
+}
+```
+
+#### Check Contract Owner
+```go
+func getOwner(client *ethclient.Client) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    owner, err := market.Owner(nil)
+    if err != nil {
+        log.Fatalf("Failed to get owner: %v", err)
+    }
+
+    fmt.Printf("Contract Owner: %s\n", owner.Hex())
+}
+```
+
+#### Check Trusted Forwarder
+```go
+func getTrustedForwarder(client *ethclient.Client) {
+    marketAddress := common.HexToAddress("YOUR_MARKET_ADDRESS")
+    market, err := contracts.NewMarket(marketAddress, client)
+    if err != nil {
+        log.Fatalf("Failed to load market: %v", err)
+    }
+
+    forwarder, err := market.TrustedForwarder(nil)
+    if err != nil {
+        log.Fatalf("Failed to get trusted forwarder: %v", err)
+    }
+
+    fmt.Printf("Trusted Forwarder: %s\n", forwarder.Hex())
+
+    // Check if an address is a trusted forwarder
+    isTrusted, err := market.IsTrustedForwarder(nil, forwarder)
+    if err != nil {
+        log.Fatalf("Failed to check trusted forwarder: %v", err)
+    }
+
+    fmt.Printf("Is Trusted Forwarder: %v\n", isTrusted)
 }
 ```
 
@@ -528,4 +738,3 @@ func completeWorkflow() {
 ```
 
 This SDK provides a comprehensive interface for interacting with OptFun options markets, enabling sophisticated trading strategies and risk management.
-
