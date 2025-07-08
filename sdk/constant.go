@@ -7,5 +7,5 @@ const (
 )
 
 var (
-	BtcMarket = common.HexToAddress("0x137b3dab3366854a1f68a7b893d3f4fad1429896")
+	BtcMarket = common.HexToAddress("0xB7C609cFfa0e47DB2467ea03fF3e598bF59361A5")
 )
