@@ -7,6 +7,5 @@ const (
 )
 
 var (
-	BtcMarket = common.HexToAddress("0xB7C609cFfa0e47DB2467ea03fF3e598bF59361A5")
-	PumpMarket = common.HexToAddress("0xc97Bd36166f345aB1C5d97c9DF196Ee6fFA2485e")
+	CollateralVault = common.HexToAddress("0xB7C609cFfa0e47DB2467ea03fF3e598bF59361A5")
 )
